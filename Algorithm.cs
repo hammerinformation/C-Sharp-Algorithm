@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 public static class Algorithm
 {
     public static List<T> Copy<T>(List<T> inputList, List<T> outPutList)
@@ -28,6 +29,22 @@ public static class Algorithm
         }
 
         return outPutList;
+    }
+
+    public static int Count<T>(List<T> list, T t)
+    {
+        int value = 0;
+        foreach (T item in list)
+        {
+            T tİtem = item;
+
+            if (tİtem.Equals(t))
+            {
+                value += 1;
+            }
+        }
+
+        return value;
     }
 
     public static int CountIf<T>(List<T> list, Func<T, bool> func)
@@ -122,4 +139,81 @@ public static class Algorithm
 
         return outPutList;
     }
+
+    public static void ForEachIf<T>(ref List<T> inputList, Func<T, bool> condition, Func<T, T> func)
+    {
+        List<T> temp = new();
+        for (int i = 0; i < inputList.Count; i++)
+        {
+            if (condition(inputList[i]))
+            {
+                T t = func(inputList[i]);
+                temp.Add(t);
+            }
+            else
+            {
+                temp.Add(inputList[i]);
+            }
+        }
+
+        inputList = temp;
+    }
+
+    public static List<T> Unique<T>(List<T> inputList, List<T> outPutList)
+    {
+        outPutList.Clear();
+
+
+        foreach (T item in inputList)
+        {
+            if (!outPutList.Contains(item))
+            {
+                outPutList.Add(item);
+            }
+        }
+
+
+        return outPutList;
+    }
+
+    public static bool AnyOf<T>(List<T> inputList, Func<T, bool> func)
+    {
+        bool value = false;
+
+        foreach (var item in inputList)
+        {
+            if(func(item))
+            {
+                value = true;
+                break;
+            }
+        }
+
+
+
+
+        return value;
+
+    }
+    
+    public static bool NoneOf<T>(List<T> inputList, Func<T, bool> func)
+    {
+        bool value = false;
+
+        foreach (var item in inputList)
+        {
+            if(func(item))
+            {
+                value = true;
+                break;
+            }
+        }
+
+
+
+
+        return !value;
+
+    }
+
 }
