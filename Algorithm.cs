@@ -92,6 +92,26 @@ public static class Algorithm
         return outPutList;
     }
 
+    public static List<T> TransformIf<T>(List<T> inputList, List<T> outPutList, Func<T, bool> condition,
+        Func<T, T> func)
+    {
+        outPutList.Clear();
+
+
+        foreach (var item in inputList)
+        {
+            if (condition(item))
+            {
+                T t = func(item);
+                outPutList.Add(t);
+            }
+        }
+
+
+        return outPutList;
+    }
+
+
     public static List<T> Merge<T>(List<T> inputList1, List<T> inputList2, List<T> outPutList,
         bool clearOutPutList = true)
     {
@@ -159,6 +179,28 @@ public static class Algorithm
         inputList = temp;
     }
 
+    public static void ForEachN<T>(ref List<T> inputList, int index, Func<T, T> func)
+    {
+        if (index > inputList.Count)
+        {
+            return;
+        }
+
+        List<T> temp = new();
+        foreach (var item in inputList)
+        {
+            temp.Add(item);
+        }
+
+        for (int i = 0; i < index; i++)
+        {
+            T t = func(temp[i]);
+            temp[i] = t;
+        }
+
+        inputList = temp;
+    }
+
     public static List<T> Unique<T>(List<T> inputList, List<T> outPutList)
     {
         outPutList.Clear();
@@ -182,7 +224,7 @@ public static class Algorithm
 
         foreach (var item in inputList)
         {
-            if(func(item))
+            if (func(item))
             {
                 value = true;
                 break;
@@ -190,19 +232,16 @@ public static class Algorithm
         }
 
 
-
-
         return value;
-
     }
-    
+
     public static bool NoneOf<T>(List<T> inputList, Func<T, bool> func)
     {
         bool value = false;
 
         foreach (var item in inputList)
         {
-            if(func(item))
+            if (func(item))
             {
                 value = true;
                 break;
@@ -210,10 +249,8 @@ public static class Algorithm
         }
 
 
-
-
         return !value;
-
     }
 
+  
 }
